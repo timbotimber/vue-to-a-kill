@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Shopping List App</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div id="pokemon-list">
+            <div class="header">
+                <h1>{{header}}</h1>
+                <button v-if="state==='default'" class="btn btn-primary" @click="toggleState('edit')" >Add Pokemon</button>
+                <button v-else class="btn btn-cancel" @click="toggleState('default')"> Cancel</button>
+            </div>
+        <div v-if="state === 'edit'" class="add-item-form">
+            <input v-model="newPokemon" type="text" placeholder="add a new pokemon" @keyup.enter="add">
+            <button class="btn btn-primary" @click="add" :disabled="newPokemon.length === 0">Save Pokemon</button>
+        </div>
+                <ul>
+    
+                    <div v-for="monster in sortPokemon"> 
+                        <div class="container">
+                            <li :class="[monster.number === 0 && 'strikeout',monster.number === 10 && 'priority' ]" >
+                                {{monster.number}} x {{monster.name}}
+                            </li>
+                            <p class="notice" v-if="monster.number===10">(probably enough isn't it?)</p>
+                        </div>
+                        <button class="btn btn-cancel" v-if="monster.number === 0" @click="remove(monster)"> remove from list?</button>
+                <button class="btn btn-primary" @click="
+                update('increase',monster)    
+                "> + </button>
+                <button class="btn btn-primary"@click="update('decrease', monster)"> - </button>
+                
+            </div>
+                </ul>
+                <p v-if="pokemon.length===0">wait... You don't have any pokemon!</p>
+    
+        </div>
+        <script src="https://unpkg.com/vue"></script>
+        <script>
+            let pokemonList = new Vue({
+                el: '#pokemon-list',
+                data: {
+                    state: "default", 
+                    newPokemon: "",
+                    header: 'pokemon list app',
+                    pokemon: []
+                },
+
+                computed: {
+                    reversedPokemon: function(){
+                        let reverse = this.pokemon.slice(0).reverse();
+                        return reverse
+                    }, 
+
+                    sortPokemon: function() {
+                     let sorted = this.pokemon.sort((a,b) =>{
+            
+                       return a.name.localeCompare(b.name)
+                     })
+                     return sorted
+                    }
+                },
+
+                methods: {
+
+                    toggleState: function(newState) {
+                        this.state = newState
+                        this.newPokemon = ""
+                    },
+
+                    add: function() {
+                        this.pokemon.push({
+                            name: this.newPokemon,
+                            number: 1,
+                            info: "this will be a URL"
+                        })
+                        this.newPokemon=""
+                        this.sortPokemon()
+                    },
+
+                    remove: function(monster) {
+                       let newList = this.pokemon.filter(entry=>
+                        entry.name != monster.name
+                        )
+                        this.pokemon = newList
+                    },
+                    update: function(instruction, pokemon) {
+                        this.pokemon.forEach((entry) =>{
+                            if (instruction === "decrease") {
+                                if (entry.name === pokemon.name) {
+                                    entry.number >0 ? entry.number-- : entry.number 
+                                    
+                                }
+                            }
+                            if (instruction === "increase") {
+                                if (entry.name === pokemon.name) {
+                                    entry.number <10 ? entry.number++ : entry.number 
+                                    
+                                }
+                            }
+                        })
+                    }
+                }
+                ,
+
+                async created () {
+                   let data = await fetch("https://pokeapi.co/api/v2/pokemon/?offset=128&limit=6")
+                   let list = await data.json()
+                   this.pokemon = list.results
+
+                   this.pokemon = this.pokemon.map((monster)=>{
+                       let random = Math.floor(Math.random() * 6) + 1  
+                       return {
+                           name: monster.name,
+                           number: random,
+                           info: monster.url 
+                       }
+                   })
+                   
+                }
+            })
+        </script>
+    </body>
+</html>
