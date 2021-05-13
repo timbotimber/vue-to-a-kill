@@ -34,9 +34,16 @@
             </div>
                 </ul>
                 <p v-if="pokemon.length===0">wait... You don't have any pokemon!</p>
+                
+            
+                <script type="text/x-template" id="click-counter-template">
+                    <button class="btn btn-primary">click me</button>
+                </script>
+                
     
         </div>
         <script src="https://unpkg.com/vue"></script>
+        
         <script>
             let pokemonList = new Vue({
                 el: '#pokemon-list',
@@ -121,5 +128,6 @@
                 }
             })
         </script>
+        
     </body>
 </html>
