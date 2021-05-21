@@ -1,10 +1,5 @@
-
 <template>
-
-   <div :key="thread.id" class="col-large push-top">
-    <h1>{{ thread.title }}</h1>
-<PostList :posts="threadPosts"/>
-<form @sumbit.prevent>
+  <form @sumbit.prevent>
               <!-- <div class="form-group">
                 <label for="thread_title">Title:</label>
                 <input type="text" id="thread_title" class="form-input" name="title" >
@@ -22,41 +17,17 @@
                 <button @click="addPost" class="btn btn-blue">Publish </button>
               </div>
           </form>
-  </div>
-
 </template>
 
 <script>
-import data from "@/data/data.json"
-import PostList from "@/components/PostList"
 export default {
-  components: {
-    PostList
-  },
-    props: {
-        id: {
-            required: true, 
-            type: String
-        }
-    },
-data () {
+    data () {
     return {
-    threads: data.threads,
-    posts: data.posts,
     newPostText: ""
     }
 }, 
-computed: {
-thread () {
-    return this.threads.find(thread => thread.id === this.id)
-}, 
-threadPosts () {
- let filtered = this.posts.filter(post => post.threadId === this.id)
- return filtered
-}
-},
 methods: {
-  addPost (e) {
+    addPost (e) {
     e.preventDefault()
     const postId = "timmy" + Math.random()
     const post = {
@@ -67,7 +38,6 @@ methods: {
       userId: "38St7Q8Zi2N1SPa5ahzssq9kbyp1"
     }
     this.posts.push(post)
-
     this.thread.posts.push(postId)
   }
 }

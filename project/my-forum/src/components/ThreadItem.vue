@@ -2,7 +2,7 @@
 
        <div >
           <p>
-            <a href="#">{{ thread.title }}</a>
+            <router-link :to="{name:'Thread', params: {id: thread.id}}">{{ thread.title }}</router-link>
           </p>
           <p class="text-faded text-xsmall">
             By <a href="#">{{ userById(thread.userId).name }}</a>, {{thread.publishedAt}}.
@@ -18,7 +18,7 @@
   
           <div>
             <p class="text-xsmall">
-              <a href="#">{{ userById(thread.userId).name }}, {{thread.publishedAt}}</a>
+              <a :href="`/thread/${thread.id}`">{{ userById(thread.userId).name }}, {{thread.publishedAt}}</a>
             </p>
             <!-- <p class="text-xsmall text-faded"><AppDate :timestamp="thread.publishedAt" /></p> -->
           </div>
@@ -47,7 +47,6 @@ methods: {
          return this.posts.find(p => p.id === postId)
      },
       userById(userId) {
-        console.log("users?", this.threadData.userId)
          return this.users.find(u => u.id === userId)
      }
 },
