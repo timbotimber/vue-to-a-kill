@@ -5,7 +5,7 @@
             <router-link :to="{name:'Thread', params: {id: thread.id}}">{{ thread.title }}</router-link>
           </p>
           <p class="text-faded text-xsmall">
-            By <a href="#">{{ userById(thread.userId).name }}</a>, {{thread.publishedAt}}.
+            By <a href="#">{{ userById(thread.userId).name }}</a>, <AppDate :timeStamp = "thread.publishedAt" />
           </p>
         </div>
 
@@ -35,6 +35,7 @@ props: {
             required: true,
         }
     },
+
     data () {
     return {
     threadData: this.thread,

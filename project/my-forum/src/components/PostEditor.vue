@@ -37,8 +37,9 @@ methods: {
       threadId: this.id,
       userId: "38St7Q8Zi2N1SPa5ahzssq9kbyp1"
     }
-    this.posts.push(post)
-    this.thread.posts.push(postId)
+    this.$emit("save-post", {post})
+    // this.posts.push(post)
+    // this.thread.posts.push(postId)
   }
 }
 }

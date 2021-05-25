@@ -20,12 +20,13 @@
           <div>
             <p>
               {{post.text}}
+        
             </p>
           </div>
         </div>
 
         <div class="post-date text-faded">
-          {{post.publishedAt}}
+          <AppDate :timeStamp = "post.publishedAt" />
         </div>
 
       </div>
@@ -41,7 +42,7 @@ props: {
         required: true,
         type: Array
     }
-}, 
+},
 data () {
     return {
     users: data.users

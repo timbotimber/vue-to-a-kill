@@ -1,26 +1,25 @@
 <template>
 <div>
    <h1>Hello there</h1>
-   <ThreadList  :threads = "threads"/>
+   <ForumList  :forums = "forums"/>
    </div>
 </template>
 
 <script>
-import ThreadList from "@/components/ThreadList"
+import ForumList from "@/components/ForumList"
 import data from "@/data/data.json"
 export default {
   components: {
-    ThreadList
+    ForumList
   },
 data () {
     return {
-    threads: data.threads,
+    forums: data.forums,
     }
 }, 
 methods: {
 }
 }
-console.log(data)
 </script>
 
 <style>
