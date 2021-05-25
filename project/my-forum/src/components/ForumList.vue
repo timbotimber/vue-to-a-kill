@@ -2,7 +2,7 @@
   <div class="col-full">
     <div class="forum-list">
       <h2 class="list-title">
-        <a href="#">Forums</a>
+        <a href="#">{{categoryName}}</a>
       </h2>
 
       <div class="forum-listing" v-for="forum in forums" :key="forum.id">
@@ -35,7 +35,11 @@ props: {
    forums: {
        required: true,
        type: Array
-   } 
+   } , 
+   categoryName: {
+       type: String,
+       default: "forums"
+   }
 }, 
 
 methods : {
